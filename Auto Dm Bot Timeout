@@ -1,0 +1,24 @@
+import discord
+from discord.ext import commands 
+
+token = 'bot token '
+owner_id = YOUR_OWNER_ID
+
+bot = commands.Bot(command_prefix='!')
+
+@bot.event
+async def on_ready():
+    print(f'Logged in as {bot.user.name}#{bot.user.discriminator}')
+
+@bot.command()
+async def timeout(ctx, user: discord.User): 
+    if ctx.message.author.id == owner_id:
+        try:
+            await user.send("ur ass been timedout in my server ")
+            await ctx.send(f"Timed out {user.name}#{user.discriminator}.")
+        except discord.Forbidden:
+            await ctx.send(f"Failed to send timeout message to {user.name}#{user.discriminator}.")
+    else:
+        await ctx.send("You do not have permission to use this command.")
+
+bot.run(token)
